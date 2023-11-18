@@ -72,6 +72,19 @@ const Signup = () => {
       return alert(res.message);
     }
   };
+  const signupwithgoogle = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("/api/auth/google/url", {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+      let data = await response.json();
+      window.location.replace(data.url);
+    } catch (error) {
+      return alert("Some error occured");
+    }
+  };
   return (
     <div className="flxcenter">
       <div className="wrapper">
@@ -131,7 +144,14 @@ const Signup = () => {
             Sign up
           </button>
           <p>
-            {" "}
+            <button
+              type="button"
+              className="login-with-google-btn"
+              onClick={signupwithgoogle}
+            >
+              Sign up with Google
+            </button>
+            <br />
             Already have an account?
             <Link to="/login">login</Link>
           </p>

@@ -1,7 +1,14 @@
 const express = require("express");
 const router = express.Router();
-const { register, login, profile } = require("../controller/api_cont");
+const {
+  register,
+  login,
+  profile,
+  google_login_url,
+  google_handel_token,
+} = require("../controller/api_cont");
 const auth = require("../middleware/auth");
+const querystring = require("querystring");
 
 // === === === register === === === //
 
@@ -13,6 +20,14 @@ router.post("/login", login);
 
 // === === === profile === === === //
 
-router.get("/profile", auth, profile);      
+router.get("/profile", auth, profile);
+
+// === === === login url === === === //
+
+router.get("/auth/google/url", google_login_url);
+
+// === === === user data fom google === === === //
+
+router.get("/auth/google", google_handel_token);
 
 module.exports = router;

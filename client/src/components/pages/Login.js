@@ -40,6 +40,19 @@ const Login = () => {
       return alert(res.message);
     }
   };
+  const loginwithgoogle = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("/api/auth/google/url", {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+      let data = await response.json();
+      window.location.replace(data.url);
+    } catch (error) {
+      return alert("Some error occured");
+    }
+  };
   return (
     <div className="flxcenter">
       <div className="wrapper">
@@ -69,7 +82,14 @@ const Login = () => {
             Login
           </button>
           <p>
-            {" "}
+            <button
+              type="button"
+              className="login-with-google-btn"
+              onClick={loginwithgoogle}
+            >
+              Sign in with Google
+            </button>
+            <br />
             Don't have a account?
             <Link to="/Signup">Signup</Link>
           </p>

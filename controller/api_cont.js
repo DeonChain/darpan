@@ -1,4 +1,5 @@
 const bcrypt = require("bcrypt");
+const axios = require("axios");
 const {
   addUser,
   getUserByEmail,
@@ -7,6 +8,7 @@ const {
 } = require("../collection/Users");
 const validator = require("validator");
 const jwt = require("jsonwebtoken");
+const { getauthurl, getToken } = require("../middleware/authurl");
 
 // === === === controller === === === //
 
@@ -62,11 +64,21 @@ exports.register = async (req, res) => {
         })
       );
     }
-    await addUser({ email, name, phone, password });
-    res
-      .status(201)
-      .json({ result: true, message: "registration was successful" });
+    let result = await addUser({ email, name, phone, password });
+    if (result.result) {
+      res
+        .status(201)
+        .json({ result: true, message: "registration was successful" });
+    } else {
+      throw new Error(
+        JSON.stringify({
+          status: 400,
+          message: "Some error occured",
+        })
+      );
+    }
   } catch (error) {
+    console.log(error);
     let err = JSON.parse(error.message);
     res.status(err.status || 400).json({ result: false, message: err.message });
   }
@@ -147,4 +159,119 @@ exports.profile = async (req, res) => {
     const err = JSON.parse(error.message);
     res.status(400 || err.status).json({ result: false, message: err.message });
   }
+};
+
+// === === === login url === === === //
+
+exports.google_login_url = (req, res) => {
+  return res.status(200).json({ result: true, url: getauthurl() });
+};
+
+// === === === handel token === === === //
+
+function generateStrongPassword(length) {
+  const uppercaseChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const lowercaseChars = "abcdefghijklmnopqrstuvwxyz";
+  const numberChars = "0123456789";
+  const specialChars = "!@#$%^&*()-_=+[]{}|;:',.<>?";
+
+  const allChars = uppercaseChars + lowercaseChars + numberChars + specialChars;
+  let password = "";
+
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * allChars.length);
+    password += allChars[randomIndex];
+  }
+
+  return password;
+}
+
+exports.google_handel_token = async (req, res) => {
+  try {
+    const code = req.query.code;
+    const { id_token, access_token } = await getToken({
+      code,
+      clientId: process.env.CLIENT_ID,
+      clientSecret: process.env.GOOGLE_SECRET_KEY,
+      redirectUri: process.env.REDIRECT_URL,
+    });
+
+    const googleUser = await axios
+      .get(
+        `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${access_token}`,
+        {
+          headers: {
+            Authorization: `Bearer ${id_token}`,
+          },
+        }
+      )
+      .then((res) => res.data)
+      .catch((error) => {
+        console.error("Failed to fetch user");
+        throw new Error(error.message);
+      });
+    let user = await getUserByEmail(googleUser.email);
+    if (user.result) {
+      const token = jwt.sign(
+        { email: user.user.email.toLowerCase(), name: user.user.name },
+        process.env.SECRET_KEY,
+        {
+          expiresIn: "432000 seconds",
+        }
+      );
+      let updatedUser = {
+        ...user.user,
+        tokens: user.user.tokens ? [...user.user.tokens, token] : [token],
+      };
+      let updater = await updateuser(updatedUser);
+      if (updater.result) {
+        res
+          .status(200)
+          .cookie("idnty", token, {
+            expires: new Date(Date.now() + 432000000),
+          })
+          .redirect(process.env.FINAL);
+      } else {
+        throw new Error(
+          JSON.stringify({
+            status: 400,
+            message: "Please check your email or password",
+          })
+        );
+      }
+    } else {
+      const token = jwt.sign(
+        { email: googleUser.email.toLowerCase(), name: googleUser.name },
+        process.env.SECRET_KEY,
+        {
+          expiresIn: "432000 seconds",
+        }
+      );
+      let password = generateStrongPassword();
+      let result = await addUser({
+        email: googleUser.email,
+        name: googleUser.name,
+        password: password,
+        tokens: [token],
+        verification: {
+          email: true,
+        },
+      });
+      if (result.result) {
+        res
+          .status(200)
+          .cookie("idnty", token, {
+            expires: new Date(Date.now() + 432000000),
+          })
+          .redirect(process.env.FINAL);
+      } else {
+        throw new Error(
+          JSON.stringify({
+            status: 400,
+            message: "some error occured",
+          })
+        );
+      }
+    }
+  } catch (error) {}
 };

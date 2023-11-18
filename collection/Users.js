@@ -5,7 +5,7 @@ const {
   query,
   where,
   getDocs,
-  setDoc
+  setDoc,
 } = require("firebase/firestore/lite");
 const db = require("../firebase/config"); // Adjust the path based on your project structure
 
@@ -19,9 +19,12 @@ const addUser = async (userData) => {
       password: await bcrypt.hash(userData.password, 12),
       registrationDate: new Date().toLocaleString(),
       verification: {
-        email: false,
+        email: userData.verification
+          ? userData.verification.email
+          : false || false,
       },
     });
+    return { result: true };
   } catch (error) {
     throw error;
   }
