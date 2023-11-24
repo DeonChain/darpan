@@ -90,6 +90,7 @@ function Nav({ type }) {
 
               <span class="btn-badge">0</span>
             </button>
+            {/* profile drop down here if user is logged in */}
             {data.email ? "" : <NavLink to="/login" class="btn has-before">
               <a class="btn has-before">
                 <span class="span">Login</span>
