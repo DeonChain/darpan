@@ -20,7 +20,7 @@ router.post("/login", login);
 
 // === === === profile === === === //
 
-router.get("/profile", auth, profile);
+router.get("/authenticate", auth, profile);
 
 // === === === login url === === === //
 

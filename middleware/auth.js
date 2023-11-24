@@ -28,8 +28,9 @@ const auth = async (req, res, next) => {
         JSON.stringify({ status: 403, message: "some error occured" })
       );
     }
-  } catch (err) {
-    throw err;
+  } catch (error) {
+    const err = JSON.parse(error.message);
+    res.status(400 || err.status).json({ result: false, message: err.message });
   }
 };
 module.exports = auth;

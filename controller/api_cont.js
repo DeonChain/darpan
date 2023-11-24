@@ -154,7 +154,8 @@ exports.login = async (req, res) => {
 
 exports.profile = async (req, res) => {
   try {
-    res.json(req.user);
+    const { email, name, phone, id, verification, registrationDate } = req.user;
+    res.json({ email, name, phone, id, verification, registrationDate });
   } catch (error) {
     const err = JSON.parse(error.message);
     res.status(400 || err.status).json({ result: false, message: err.message });
@@ -273,5 +274,5 @@ exports.google_handel_token = async (req, res) => {
         );
       }
     }
-  } catch (error) {}
+  } catch (error) { }
 };
