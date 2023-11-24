@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
 import store from "./store";
 import { Provider } from "react-redux";
 
@@ -24,10 +24,27 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
+    async loader() {
+      const response = await fetch("/api/authenticate", {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+      let res = await response.json();
+      return res;
+    }
   },
   {
     path: "/Signup",
     element: <Signup />,
+    async loader() {
+      const response = await fetch("/api/authenticate", {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+      let res = await response.json();
+      return res;
+    },
+
   },
 ]);
 root.render(

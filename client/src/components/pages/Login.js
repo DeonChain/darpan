@@ -1,13 +1,24 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, redirect, useLoaderData, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { u_email, u_password } from "../../Function/Signup";
+import { update } from "../../Function/User";
 import validator from "validator";
+import Nav from "../templates/Nav";
+import { useEffect } from "react";
 
 const Login = () => {
-  const data = useSelector((state) => state.signup);
+  const logged = useLoaderData();
   const dispatch = useDispatch();
+  useEffect(() => {
+    if (logged.email) {
+      dispatch(update(logged))
+      Navigate("/")
+    }
+  }, [])
+  const data = useSelector((state) => state.signup);
   const Navigate = useNavigate();
+
   const login = async (e) => {
     e.preventDefault();
     const { email, password } = data;
@@ -54,48 +65,54 @@ const Login = () => {
     }
   };
   return (
-    <div className="flxcenter">
-      <div className="wrapper">
-        <form action="">
-          <h1>Login</h1>
-          <div className="input">
-            <input
-              type="text"
-              placeholder="Email"
-              value={data.email}
-              onChange={(e) => {
-                dispatch(u_email(e.target.value));
-              }}
-            />
-          </div>
-          <div className="input">
-            <input
-              type="password"
-              placeholder="Password"
-              value={data.password}
-              onChange={(e) => {
-                dispatch(u_password(e.target.value));
-              }}
-            />
-          </div>
-          <button type="submit" className="btn" onClick={login}>
-            Login
-          </button>
-          <p>
-            <button
-              type="button"
-              className="login-with-google-btn"
-              onClick={loginwithgoogle}
-            >
-              Sign in with Google
+    <>
+      <Nav type={"login"} />
+      <div className="flxcenter container">
+        <div className="wrapper">
+          <form action="">
+            <h2>Welcome Back</h2>
+            <div className="input">
+              <input
+                className="input-box"
+                type="text"
+                placeholder="Email"
+                value={data.email}
+                onChange={(e) => {
+                  dispatch(u_email(e.target.value));
+                }}
+              />
+            </div>
+            <div className="input">
+              <input
+                className="input-box"
+                type="password"
+                placeholder="Password"
+                value={data.password}
+                onChange={(e) => {
+                  dispatch(u_password(e.target.value));
+                }}
+              />
+            </div>
+            <button type="submit" className="login-btn-1" onClick={login}>
+              Login
             </button>
-            <br />
-            Don't have a account?
-            <Link to="/Signup">Signup</Link>
-          </p>
-        </form>
+            <p>
+              <button
+                type="button"
+                className="login-btn"
+                onClick={loginwithgoogle}
+              >
+                <ion-icon name="logo-google" className="s-icon"></ion-icon>
+                <p className="signin-para"> Sign in with Google</p>
+              </button>
+              <br />
+              Don't have a account?
+              <Link to="/Signup">Signup</Link>
+            </p>
+          </form>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

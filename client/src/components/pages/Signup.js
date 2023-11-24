@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLoaderData } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import {
   u_email,
@@ -9,12 +9,20 @@ import {
   u_phone,
 } from "../../Function/Signup";
 import validator from "validator";
+import Nav from "../templates/Nav";
+import { useEffect } from "react";
 
 const Signup = () => {
+  const Navigate = useNavigate()
+  const logged = useLoaderData();
+  useEffect(() => {
+    if (logged.email) {
+      Navigate("/")
+    }
+  }, [])
   const data = useSelector((state) => state.signup);
 
   const dispatch = useDispatch();
-  const Navigate = useNavigate();
 
   const register = async (e) => {
     e.preventDefault();
@@ -85,78 +93,87 @@ const Signup = () => {
     }
   };
   return (
-    <div className="flxcenter">
-      <div className="wrapper">
-        <form>
-          <h1>Sign up</h1>
-          <div className="input">
-            <input
-              type="text"
-              placeholder="Full Name"
-              value={data.name}
-              onChange={(e) => {
-                dispatch(u_name(e.target.value));
-              }}
-            />
-          </div>
-          <div className="input">
-            <input
-              type="text"
-              placeholder="Phone number"
-              value={data.phone}
-              onChange={(e) => {
-                dispatch(u_phone(e.target.value));
-              }}
-            />
-          </div>
-          <div className="input">
-            <input
-              type="text"
-              placeholder="Email"
-              value={data.email}
-              onChange={(e) => {
-                dispatch(u_email(e.target.value));
-              }}
-            />
-          </div>
-          <div className="input">
-            <input
-              type="password"
-              placeholder="Password"
-              value={data.password}
-              onChange={(e) => {
-                dispatch(u_password(e.target.value));
-              }}
-            />
-          </div>
-          <div className="input">
-            <input
-              type="password"
-              placeholder="Confirm Password"
-              value={data.cPassword}
-              onChange={(e) => {
-                dispatch(u_cpassword(e.target.value));
-              }}
-            />
-          </div>
-          <button type="submit" className="btn" onClick={register}>
-            Sign up
-          </button>
-          <p>
-            <button
-              type="button"
-              className="login-with-google-btn"
-              onClick={signupwithgoogle}
-            >
-              Sign up with Google
+    <>
+      <Nav type="signup" />
+      <div className="flxcenter" style={{ marginTop: "130px" }}>
+        <div className="wrapper">
+          <form>
+            <h1>Sign up</h1>
+            <div className="input">
+              <input
+                className="input-box"
+                type="text"
+                placeholder="Full Name"
+                value={data.name}
+                onChange={(e) => {
+                  dispatch(u_name(e.target.value));
+                }}
+              />
+            </div>
+            <div className="input">
+              <input
+                className="input-box"
+                type="text"
+                placeholder="Phone number"
+                value={data.phone}
+                onChange={(e) => {
+                  dispatch(u_phone(e.target.value));
+                }}
+              />
+            </div>
+            <div className="input">
+              <input
+                className="input-box"
+                type="text"
+                placeholder="Email"
+                value={data.email}
+                onChange={(e) => {
+                  dispatch(u_email(e.target.value));
+                }}
+              />
+            </div>
+            <div className="input">
+              <input
+                className="input-box"
+                type="password"
+                placeholder="Password"
+                value={data.password}
+                onChange={(e) => {
+                  dispatch(u_password(e.target.value));
+                }}
+              />
+            </div>
+            <div className="input">
+              <input
+                className="input-box"
+                type="password"
+                placeholder="Confirm Password"
+                value={data.cPassword}
+                onChange={(e) => {
+                  dispatch(u_cpassword(e.target.value));
+                }}
+              />
+            </div>
+            <button type="submit" className="login-btn-1" onClick={register}>
+              Sign up
             </button>
-            <br />
-            Already have an account?
-            <Link to="/login">login</Link>
-          </p>
-        </form>
+            <p>
+              <button
+                type="button"
+                className="login-btn"
+                onClick={signupwithgoogle}
+              >
+                <ion-icon name="logo-google" className="s-icon"></ion-icon>
+                <p className="signin-para">Signup with Google</p>
+              </button>
+              <br />
+              Already have an account?
+              <Link to="/login">login</Link>
+            </p>
+          </form>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
