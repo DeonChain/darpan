@@ -274,5 +274,34 @@ exports.google_handel_token = async (req, res) => {
         );
       }
     }
-  } catch (error) { }
+  } catch (error) {}
+};
+
+// === === === logout === === === //
+
+exports.logout = async (req, res) => {
+  try {
+    let user = req.user;
+    user.tokens = user.tokens.filter((itm) => itm !== req.cookies.idnty);
+    let updater = await updateuser(user);
+    if (updater.result) {
+      res.status(200).clearCookie("idnty").json({
+        result: true,
+        message: "logged out",
+      });
+    } else {
+      throw new Error(
+        JSON.stringify({
+          status: 400,
+          message: "logged out",
+        })
+      );
+    }
+  } catch (error) {
+    const err = JSON.parse(error.message);
+    res
+      .clearCookie("idnty")
+      .status(400 || err.status)
+      .json({ result: false, message: err.message });
+  }
 };
