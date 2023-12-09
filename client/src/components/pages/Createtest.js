@@ -28,8 +28,9 @@ const Createtest = () => {
     }
   }, []);
   const [question, setQuestion] = useState({
-    index:"",
+    index: "",
     question: "",
+    option_count: 2,
     options: [
       {
         text: "",
@@ -38,15 +39,15 @@ const Createtest = () => {
     ],
     multi_correct: false,
   });
-   
+
   // === === === update function === === === //
 
   const updateQuestion = (property, value, optionIndex) => {
-    setQuestion(prevQuestion => {
-      if (property === 'options') {
-        const updatedOptions = prevQuestion.options.map((option, index) => (
+    setQuestion((prevQuestion) => {
+      if (property === "options") {
+        const updatedOptions = prevQuestion.options.map((option, index) =>
           index === optionIndex ? { ...option, [value]: value } : option
-        ));
+        );
         return { ...prevQuestion, [property]: updatedOptions };
       }
       return { ...prevQuestion, [property]: value };
@@ -55,7 +56,11 @@ const Createtest = () => {
 
   const handleChange = (event, property, optionIndex) => {
     const { value, checked } = event.target;
-    updateQuestion(property, property === 'multi_correct' ? checked : value, optionIndex);
+    updateQuestion(
+      property,
+      property === "multi_correct" ? checked : value,
+      optionIndex
+    );
   };
 
   // === === === end === === === //
@@ -107,9 +112,45 @@ const Createtest = () => {
               </p>
             </div>
             <div>
-                <div>
-                    Question : <input type="text" style={{"all":"initial", border:"solid 1px black"}} value={question.question} onChange={(e)=>{handleChange(e, 'question')}}/>
-                </div>
+              <div>
+                <p style={{ display: "flex" }}>
+                  <span>
+                    Question :{" "}
+                    <input
+                      type="text"
+                      style={{ all: "initial", border: "solid 1px black" }}
+                      value={question.question}
+                      onChange={(e) => {
+                        handleChange(e, "question");
+                      }}
+                    />
+                  </span>
+                  <span>
+                    Options:
+                    <select
+                      onChange={(e) => {
+                        handleChange(e, "option_count");
+                      }}
+                    >
+                      <option value={2}>Two </option>
+                      <option value={3}>Three</option>
+                      <option value={4}>Four</option>
+                      <option value={5}>Five</option>
+                    </select>
+                  </span>
+                </p>
+                {Array.from(
+                  { length: question.option_count },
+                  (_, index) => index + 1
+                ).map((itm) => {
+                  return (
+                    <div className="section-tgl">
+                      <span>options {itm}:</span>
+                      <input className="option-entry" />
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </div>
