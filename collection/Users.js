@@ -7,7 +7,7 @@ const {
   getDocs,
   setDoc,
 } = require("firebase/firestore/lite");
-const db = require("../firebase/config"); // Adjust the path based on your project structure
+const db = require("../firebase/config");
 
 const Users = collection(db, "Users");
 

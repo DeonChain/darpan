@@ -6,6 +6,7 @@ const {
   getUserByPhone,
   updateuser,
 } = require("../collection/Users");
+const {} = require("./")
 const validator = require("validator");
 const jwt = require("jsonwebtoken");
 const { getauthurl, getToken } = require("../middleware/authurl");
@@ -305,3 +306,20 @@ exports.logout = async (req, res) => {
       .json({ result: false, message: err.message });
   }
 };
+
+
+// === === === upload a new test === === === //
+
+exports.upload_test = async (req, res)=>{
+  try {
+    const user = req.user;
+    const data = req.body;
+
+  } catch (error) {
+    const err = JSON.parse(error.message);
+    res
+      .clearCookie("idnty")
+      .status(400 || err.status)
+      .json({ result: false, message: err.message });
+  }
+}
