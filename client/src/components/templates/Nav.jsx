@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import { NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { update } from "../../Function/User";
@@ -14,9 +14,12 @@ function Nav({ type }) {
     let res = await response.json();
     dispatch(update(res));
   };
-  if (!data.email) {
-    auther();
-  }
+  useEffect(() => {
+    if (!data.email) {
+      auther();
+    }
+  },[])
+  
   let logout = async () => {
     const response = await fetch("/api/logout", {
       method: "GET",
@@ -110,7 +113,7 @@ function Nav({ type }) {
                     </a>
                   </li>
                   <li>
-                    <a onClick={logout} href="#">
+                    <a onClick={logout}>
                     <ion-icon name="log-out-sharp"></ion-icon>&nbsp;Sign Out
                     </a>
                   </li>

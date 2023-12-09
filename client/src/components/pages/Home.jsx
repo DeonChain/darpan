@@ -1,4 +1,4 @@
-import "./css/home2.css";
+import "./css/home.css";
 import Nav from "../templates/Nav";
 import Hero from "../templates/Hero";
 import Category from "../templates/Category";

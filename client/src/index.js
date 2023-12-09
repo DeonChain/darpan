@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import store from "./store";
 import { Provider } from "react-redux";
 
@@ -9,6 +9,7 @@ import ErrorPage from "./components/pages/error-page";
 import Home from "./components/pages/Home.jsx"
 import Login from "./components/pages/Login";
 import Signup from "./components/pages/Signup";
+import Createtest from "./components/pages/Createtest";
 // === === === Ends here === === === //
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -44,7 +45,10 @@ const router = createBrowserRouter([
       let res = await response.json();
       return res;
     },
-
+  },
+  {
+    path: "/newtest",
+    element: <Createtest />
   },
 ]);
 root.render(

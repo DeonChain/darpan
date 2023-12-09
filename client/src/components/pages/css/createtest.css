@@ -1,0 +1,38 @@
+.test-subhead{
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: lightgrey;
+    color: white;
+}
+.edit-test{
+    padding:5px 10px;
+    background-color: #008106;
+    color: white;
+    border-radius: 3px;
+}
+.Ctest-main{
+    height: calc(100vh - 50px);
+    display: flex;
+}
+.right-bx{
+    height: 100%;
+    width: calc(100% - 250px);
+}
+
+.left-bx{
+    height: 100%;
+    width: 250px;
+    background-color: #dadada;
+}
+
+.section-tgl{
+    height: 60px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #eceaea;
+}
