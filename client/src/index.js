@@ -10,6 +10,7 @@ import Home from "./components/pages/Home.jsx"
 import Login from "./components/pages/Login";
 import Signup from "./components/pages/Signup";
 import Createtest from "./components/pages/Createtest";
+import Profilepage from  "./components/pages/Profilepage"
 // === === === Ends here === === === //
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
     path: "/newtest",
     element: <Createtest />
   },
+  {
+    path:"/profile",
+    element: <Profilepage/>
+  }
 ]);
 root.render(
   <React.StrictMode>

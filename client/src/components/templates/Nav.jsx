@@ -79,9 +79,9 @@ function Nav({ type }) {
                   <div class={menu ? "menu active" : "menu"}>
                     <ul>
                       <li>
-                        <a href="#">
+                        <NavLink to="/profile">
                           <ion-icon name="person"></ion-icon>&nbsp;Profile
-                        </a>
+                        </NavLink>
                       </li>
                       <li>
                         <NavLink to="/newtest">
