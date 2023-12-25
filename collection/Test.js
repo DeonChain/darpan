@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt");
 const {
   collection,
-  addDoc,
+  addDoc, 
   query,
   where,
   getDocs,

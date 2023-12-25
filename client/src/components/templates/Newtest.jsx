@@ -2,16 +2,39 @@ import React from "react";
 import "./css/newtest.css";
 import { useSelector, useDispatch } from "react-redux";
 import { updatetest } from "../../Function/Test";
+import { useNavigate } from "react-router-dom";
 
 const Newtest = () => {
   const dispatch = useDispatch();
+  const Navigate = useNavigate();
   const test = useSelector((state) => state.test);
   return (
     <>
       <div className="form-popup-bg is-visible">
+        <a
+          className="Previous_page"
+          onClick={() => {
+            Navigate(-1)
+          }}
+        >
+          <ion-icon name="arrow-back-outline"></ion-icon>
+        </a>
         <div className="form-container">
+          <a
+            className="closer"
+            onClick={() => {
+              dispatch(updatetest({ display: test.title ? false : true }));
+            }}
+          >
+            <ion-icon name="close-outline"></ion-icon>
+          </a>
           <h1>Create new test</h1>
-          <p>marks: {test.sections[0].question_count*test.sections[0].marks+test.sections[1].question_count*test.sections[1].marks+test.sections[2].question_count*test.sections[2].marks}</p>
+          <p>
+            marks:{" "}
+            {test.sections[0].question_count * test.sections[0].marks +
+              test.sections[1].question_count * test.sections[1].marks +
+              test.sections[2].question_count * test.sections[2].marks}
+          </p>
           <form action="">
             <div className="form-group">
               <label for="">Test Title</label>

@@ -6,7 +6,8 @@ const {
   profile,
   google_login_url,
   google_handel_token,
-  logout
+  logout,
+  upload_test,
 } = require("../controller/api_cont");
 const auth = require("../middleware/auth");
 const querystring = require("querystring");
@@ -33,6 +34,10 @@ router.get("/auth/google", google_handel_token);
 
 // === === === logout === === === //
 
-router.get("/logout", auth, logout)
+router.get("/logout", auth, logout);
+
+// === === === create test === === === //
+
+router.post("/new/test", auth, upload_test);
 
 module.exports = router;

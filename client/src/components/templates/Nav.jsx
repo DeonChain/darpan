@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { update } from "../../Function/User";
 function Nav({ type }) {
-  const [menu, setmenu] = useState(false)
+  const [menu, setmenu] = useState(false);
   const dispatch = useDispatch();
   const data = useSelector((state) => state.user);
   let auther = async () => {
@@ -18,14 +18,14 @@ function Nav({ type }) {
     if (!data.email) {
       auther();
     }
-  },[])
-  
+  }, []);
+
   let logout = async () => {
     const response = await fetch("/api/logout", {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });
-    window.location.replace("/")
+    window.location.replace("/");
   };
   return (
     <header class="header" data-header>
@@ -56,37 +56,7 @@ function Nav({ type }) {
                 </button>
               </div>
 
-              <ul class="navbar-list">
-                <li class="navbar-item">
-                  <a href="#home" class="navbar-link" data-nav-link>
-                    Home
-                  </a>
-                </li>
-
-                <li class="navbar-item">
-                  <a href="#about" class="navbar-link" data-nav-link>
-                    About
-                  </a>
-                </li>
-
-                <li class="navbar-item">
-                  <a href="#courses" class="navbar-link" data-nav-link>
-                    Courses
-                  </a>
-                </li>
-
-                <li class="navbar-item">
-                  <a href="#blog" class="navbar-link" data-nav-link>
-                    Blog
-                  </a>
-                </li>
-
-                <li class="navbar-item">
-                  <a href="#" class="navbar-link" data-nav-link>
-                    Contact
-                  </a>
-                </li>
-              </ul>
+              <ul class="navbar-list"></ul>
             </>
           )}
         </nav>
@@ -97,28 +67,36 @@ function Nav({ type }) {
           ) : (
             <>
               {data.email ? (
-                <><button class="header-action-btn" aria-label="cart" title="Cart" onClick={()=> setmenu(!menu)}>
-                <ion-icon name="person-circle"></ion-icon>
-              </button>
-              <div class={menu?"menu active":"menu"}>
-                <ul>
-                  <li>
-                    <a href="#">
-                    <ion-icon name="person"></ion-icon>&nbsp;Profile
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                    <ion-icon name="clipboard"></ion-icon>&nbsp;Dashboard
-                    </a>
-                  </li>
-                  <li>
-                    <a onClick={logout}>
-                    <ion-icon name="log-out-sharp"></ion-icon>&nbsp;Sign Out
-                    </a>
-                  </li>
-                </ul>
-              </div></>
+                <>
+                  <button
+                    class="header-action-btn"
+                    aria-label="cart"
+                    title="Cart"
+                    onClick={() => setmenu(!menu)}
+                  >
+                    <ion-icon name="person-circle"></ion-icon>
+                  </button>
+                  <div class={menu ? "menu active" : "menu"}>
+                    <ul>
+                      <li>
+                        <a href="#">
+                          <ion-icon name="person"></ion-icon>&nbsp;Profile
+                        </a>
+                      </li>
+                      <li>
+                        <NavLink to="/newtest">
+                          <ion-icon name="clipboard"></ion-icon>&nbsp;New Test
+                        </NavLink>
+                      </li>
+                      <li>
+                        <a onClick={logout}>
+                          <ion-icon name="log-out-sharp"></ion-icon>&nbsp;Sign
+                          Out
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </>
               ) : (
                 <NavLink to="/login" class="btn has-before">
                   <a class="btn has-before">
@@ -133,13 +111,6 @@ function Nav({ type }) {
               )}
             </>
           )}
-          <button
-            class="header-action-btn"
-            aria-label="open menu"
-            data-nav-toggler
-          >
-            <ion-icon name="menu-outline" aria-hidden="true"></ion-icon>
-          </button>
         </div>
 
         <div class="overlay" data-nav-toggler data-overlay></div>

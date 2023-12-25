@@ -4,34 +4,34 @@ function Course() {
   const courses = [
     {
       id: 1,
-      imageSrc: "./images/course-1.jpg",
+      imageSrc: "/img/blog-1.jpg",
       title: "Build Responsive Real-World Websites with HTML and CSS",
       duration: "3 Weeks",
       level: "Beginner",
       rating: "5.0/7 Rating",
-      price: 29,
+      price: 6000,
       lessons: 8,
       students: 20,
     },
     {
       id: 2,
-      imageSrc: "./images/course-2.jpg",
+      imageSrc: "/img/blog-2.jpg",
       title: "Java Programming Masterclass for Software Developers",
       duration: "8 Weeks",
       level: "Advanced",
       rating: "4.5/9 Rating",
-      price: 49,
+      price: 999,
       lessons: 15,
       students: 35,
     },
     {
       id: 3,
-      imageSrc: "./images/course-3.jpg",
+      imageSrc: "./img/blog-3.jpg",
       title: "The Complete Camtasia Course for Content Creators",
       duration: "3 Weeks",
       level: "Intermediate",
       rating: "4.9/7 Rating",
-      price: 35,
+      price: 690,
       lessons: 13,
       students: 18,
     },
@@ -87,7 +87,7 @@ function Course() {
                   </div>
 
                   <data className="price" value={course.price}>
-                    ${course.price.toFixed(2)}
+                  ₹{course.price.toFixed(2)}
                   </data>
 
                   <ul className="card-meta-list">

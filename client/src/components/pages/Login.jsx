@@ -23,16 +23,9 @@ const Login = () => {
     e.preventDefault();
     const { email, password } = data;
     if (!email || !validator.isEmail(email)) {
-      throw new Error(
-        JSON.stringify({ status: 400, message: "Please provide a valid email" })
-      );
+      return alert("Please enter a valid email")
     } else if (!validator.isStrongPassword(password)) {
-      throw new Error(
-        JSON.stringify({
-          status: 400,
-          message: "Please enter a strong password",
-        })
-      );
+      return alert("Please enter a Strong password")
     }
     const response = await fetch("/api/login", {
       method: "POST",
