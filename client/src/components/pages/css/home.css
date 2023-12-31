@@ -18,7 +18,7 @@
   --white_50: hsla(0, 0%, 100%, 0.5);
   --black_50: hsla(0, 0%, 0%, 0.5);
   --black_30: hsla(0, 0%, 0%, 0.3);
-  --kappel: hsl(170, 75%, 41%);
+  --kappel: #1ab79d;
   --white: hsl(0, 0%, 100%);
 
   /**

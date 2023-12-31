@@ -5,7 +5,7 @@ import store from "./store";
 import { Provider } from "react-redux";
 
 // === === === importing pages === === === //
-import ErrorPage from "./components/pages/error-page";
+import ErrorPage from "./components/pages/Errorpage";
 import Home from "./components/pages/Home.jsx";
 import Login from "./components/pages/Login";
 import Signup from "./components/pages/Signup";
@@ -24,12 +24,12 @@ root.render(
         <>
           <Nav />
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/Signup" element={<Signup />} />
-            <Route path="/newtest" element={<Createtest />} />
-            <Route path="/profile" element={<Profilepage />} />
-            <Route path="*" element={ErrorPage} />
+            <Route path="/" element={<Home />}/>
+            <Route exact path="/login" element={<Login />} />
+            <Route exact path="/Signup" element={<Signup />} />
+            <Route exact path="/newtest" element={<Createtest />} />
+            <Route exact path="/profile" element={<Profilepage />} />
+            <Route path="*"element={<ErrorPage/>} />
           </Routes>
         </>
       </Provider>
