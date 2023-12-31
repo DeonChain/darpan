@@ -1,12 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { update } from "../../Function/User";
 import Loading from "./Loading";
+
 function Nav({ type }) {
-  const [menu, setmenu] = useState(false);
+  const [menu, setMenu] = useState(false);
   const dispatch = useDispatch();
   const data = useSelector((state) => state.user);
+
+  const menuRef = useRef(null);
+
   let auther = async () => {
     const response = await fetch("/api/authenticate", {
       method: "GET",
@@ -15,8 +19,36 @@ function Nav({ type }) {
     let res = await response.json();
     dispatch(update({ ...res, loading: false }));
   };
+
   useEffect(() => {
     auther();
+  }, []);
+
+  useEffect(() => {
+    // Toggle body overflow based on loading state
+    document.body.style.overflowY = data.loading ? "hidden" : "auto";
+
+    // Cleanup to reset the style when the component unmounts
+    return () => {
+      document.body.style.overflowY = "auto";
+    };
+  }, [data.loading]);
+
+  const handleClickOutsideMenu = (event) => {
+    if (menuRef.current && !menuRef.current.contains(event.target)) {
+      // Clicked outside the menu, close it
+      setMenu(false);
+    }
+  };
+
+  useEffect(() => {
+    // Add click event listener to close menu when clicked outside
+    document.addEventListener("mousedown", handleClickOutsideMenu);
+
+    // Cleanup to remove the event listener when the component unmounts
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutsideMenu);
+    };
   }, []);
 
   let logout = async () => {
@@ -27,29 +59,22 @@ function Nav({ type }) {
     });
     window.location.replace("/");
   };
+
   return (
     <>
-      <header class="header" data-header>
-        <div class="container">
+      <header className="header" data-header>
+        <div className="container">
           <NavLink to="/" className="logo">
             <h2>Darpan Analytics</h2>
           </NavLink>
-          <nav class="navbar" data-navbar>
+          <nav className="navbar" data-navbar>
             {type === "login" || type === "signup" ? (
               ""
             ) : (
               <>
-                <div class="wrapper">
-                  <a href="#" class="logo">
-                    <img
-                      src="./images/logo.svg"
-                      width="162"
-                      height="50"
-                      alt="EduWeb logo"
-                    />
-                  </a>
+                <div className="wrapper">
                   <button
-                    class="nav-close-btn"
+                    className="nav-close-btn"
                     aria-label="close menu"
                     data-nav-toggler
                   >
@@ -60,12 +85,12 @@ function Nav({ type }) {
                   </button>
                 </div>
 
-                <ul class="navbar-list"></ul>
+                <ul className="navbar-list"></ul>
               </>
             )}
           </nav>
 
-          <div class="header-actions">
+          <div className="header-actions">
             {type === "login" || type === "signup" ? (
               ""
             ) : (
@@ -73,20 +98,20 @@ function Nav({ type }) {
                 {data.email ? (
                   <>
                     <button
-                      class="header-action-btn"
+                      className="header-action-btn"
                       aria-label="cart"
                       title="Cart"
-                      onClick={() => setmenu(!menu)}
+                      onClick={() => setMenu(!menu)}
                     >
                       <ion-icon name="person-circle"></ion-icon>
                     </button>
-                    <div class={menu ? "menu active" : "menu"}>
+                    <div className={menu ? "menu active" : "menu"} ref={menuRef}>
                       <ul>
                         <li>
                           <NavLink
                             to="/profile"
                             onClick={() => {
-                              setmenu(false);
+                              setMenu(false);
                             }}
                           >
                             <ion-icon name="person"></ion-icon>&nbsp;Profile
@@ -96,7 +121,7 @@ function Nav({ type }) {
                           <NavLink
                             to="/newtest"
                             onClick={() => {
-                              setmenu(false);
+                              setMenu(false);
                             }}
                           >
                             <ion-icon name="clipboard"></ion-icon>&nbsp;New Test
@@ -104,17 +129,16 @@ function Nav({ type }) {
                         </li>
                         <li>
                           <a onClick={logout}>
-                            <ion-icon name="log-out-sharp"></ion-icon>&nbsp;Sign
-                            Out
+                            <ion-icon name="log-out-sharp"></ion-icon>&nbsp;Sign Out
                           </a>
                         </li>
                       </ul>
                     </div>
                   </>
                 ) : (
-                  <NavLink to="/login" class="btn has-before">
-                    <a class="btn has-before">
-                      <span class="span">Login</span>
+                  <NavLink to="/login" className="btn has-before">
+                    <a className="btn has-before">
+                      <span className="span">Login</span>
 
                       <ion-icon
                         name="arrow-forward-outline"
@@ -127,7 +151,7 @@ function Nav({ type }) {
             )}
           </div>
 
-          <div class="overlay" data-nav-toggler data-overlay></div>
+          <div className="overlay" data-nav-toggler data-overlay></div>
         </div>
       </header>
       {data.loading ? <Loading /> : ""}
