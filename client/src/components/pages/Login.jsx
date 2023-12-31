@@ -1,31 +1,29 @@
 import React from "react";
-import { Link, redirect, useLoaderData, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { u_email, u_password } from "../../Function/Signup";
 import { update } from "../../Function/User";
 import validator from "validator";
-import Nav from "../templates/Nav";
 import { useEffect } from "react";
 
 const Login = () => {
-  const logged = useLoaderData();
   const dispatch = useDispatch();
-  useEffect(() => {
-    if (logged.email) {
-      dispatch(update(logged))
-      Navigate("/")
-    }
-  }, [])
   const data = useSelector((state) => state.signup);
   const Navigate = useNavigate();
+  const user = useSelector((state) => state.user);
+  useEffect(() => {
+    if (user.email) {
+      Navigate("/");
+    }
+  }, [user]);
 
   const login = async (e) => {
     e.preventDefault();
     const { email, password } = data;
     if (!email || !validator.isEmail(email)) {
-      return alert("Please enter a valid email")
+      return alert("Please enter a valid email");
     } else if (!validator.isStrongPassword(password)) {
-      return alert("Please enter a Strong password")
+      return alert("Please enter a Strong password");
     }
     const response = await fetch("/api/login", {
       method: "POST",
@@ -38,8 +36,7 @@ const Login = () => {
     let res = await response.json();
     if (response.status === 200) {
       alert("logged in");
-      // === === === will redirect to dashboard but for now to root page === === === //
-      Navigate("/");
+      window.location.replace("/");
     } else {
       return alert(res.message);
     }
@@ -59,7 +56,6 @@ const Login = () => {
   };
   return (
     <>
-      <Nav type={"login"} />
       <div className="flxcenter container">
         <div className="wrapper">
           <form action="">

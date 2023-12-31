@@ -1,7 +1,6 @@
 // ProfilePage.js
 import React, { useState } from "react";
 import "./css/profilepage.css";
-import Nav from "../templates/Nav";
 
 const initialProfileData = {
   name: "John Doe",
@@ -40,7 +39,6 @@ const Profilepage = () => {
 
   return (
     <>
-      <Nav></Nav>
       <h1 className="user-head">User Profile</h1>
       <div class="profile-container">
         <div class="profile-image">

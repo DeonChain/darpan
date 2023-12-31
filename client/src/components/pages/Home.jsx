@@ -1,5 +1,4 @@
 import "./css/home.css";
-import Nav from "../templates/Nav";
 import Hero from "../templates/Hero";
 import Category from "../templates/Category";
 import About from "../templates/About";
@@ -9,7 +8,6 @@ import Footer from "../templates/Footer";
 function Home() {
   return (
     <div>
-      <Nav />
       <Hero />
       <Category />
       <About />

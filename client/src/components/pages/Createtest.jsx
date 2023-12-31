@@ -5,31 +5,17 @@ import { update } from "../../Function/User";
 import Newtest from "../templates/Newtest";
 import "./css/createtest.css";
 import { updatetest, resettest } from "../../Function/Test";
-import Nav from "../templates/Nav";
 
 const Createtest = () => {
   let data = useSelector((state) => state.user);
   const Navigate = useNavigate();
   const dispatch = useDispatch();
   let test = useSelector((state) => state.test);
-
-  let auther = async () => {
-    const response = await fetch("/api/authenticate", {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    });
-    let res = await response.json();
-    dispatch(update(res));
-    if (!res.email) {
+  useEffect(() => {
+    if (!data.email && !data.loading) {
       Navigate("/");
     }
-  };
-
-  useEffect(() => {
-    if (!data.email) {
-      auther();
-    }
-  }, []);
+  }, [data]);
 
   const [questionIndex, setQuestionIndex] = useState(0);
 
@@ -358,7 +344,6 @@ const Createtest = () => {
 
   return (
     <>
-      <Nav />
       {!test.title || test.display ? <Newtest /> : ""}
       <div className="Createtest">
         <div className="Ctest-main">

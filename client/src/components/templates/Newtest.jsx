@@ -11,23 +11,15 @@ const Newtest = () => {
   return (
     <>
       <div className="form-popup-bg is-visible">
+        <div className="form-container">
         <a
-          className="Previous_page"
+          className="closer"
           onClick={() => {
             Navigate(-1)
           }}
         >
           <ion-icon name="arrow-back-outline"></ion-icon>
         </a>
-        <div className="form-container">
-          <a
-            className="closer"
-            onClick={() => {
-              dispatch(updatetest({ display: test.title ? false : true }));
-            }}
-          >
-            <ion-icon name="close-outline"></ion-icon>
-          </a>
           <h1>Create new test</h1>
           <p>
             marks:{" "}

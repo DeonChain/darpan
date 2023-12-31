@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useNavigate, useLoaderData } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import {
   u_email,
@@ -9,17 +9,16 @@ import {
   u_phone,
 } from "../../Function/Signup";
 import validator from "validator";
-import Nav from "../templates/Nav";
 import { useEffect } from "react";
 
 const Signup = () => {
-  const Navigate = useNavigate()
-  const logged = useLoaderData();
+  const Navigate = useNavigate();
+  const user = useSelector((state) => state.user);
   useEffect(() => {
-    if (logged.email) {
-      Navigate("/")
+    if (user.email) {
+      Navigate("/");
     }
-  }, [])
+  }, [user]);
   const data = useSelector((state) => state.signup);
 
   const dispatch = useDispatch();
@@ -94,7 +93,6 @@ const Signup = () => {
   };
   return (
     <>
-      <Nav type="signup" />
       <div className="flxcenter" style={{ marginTop: "130px" }}>
         <div className="wrapper">
           <form>
