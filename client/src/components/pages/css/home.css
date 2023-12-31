@@ -322,7 +322,6 @@ body {
 }
 
 .header {
-  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
@@ -343,6 +342,7 @@ body {
   justify-content: space-between;
   align-items: center;
   gap: 5px;
+  position: relative;
 }
 
 .header-action-btn,
@@ -1538,7 +1538,7 @@ body {
 .menu {
   position: absolute;
   top: calc(100% + 24px);
-  right: 16px;
+  right: 0px;
   width: 200px;
   min-height: 100px;
   background: #fff;
@@ -1553,7 +1553,7 @@ body {
   content: '';
   position: absolute;
   top: -10px;
-  right: 14px;
+  right: 7px;
   width: 20px;
   height: 20px;
   background: #fff;
