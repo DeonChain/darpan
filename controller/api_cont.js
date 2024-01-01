@@ -10,6 +10,7 @@ const { addTest } = require("../collection/Test");
 const validator = require("validator");
 const jwt = require("jsonwebtoken");
 const { getauthurl, getToken } = require("../middleware/authurl");
+const uniqid = require("uniqid");
 
 // === === === controller === === === //
 
@@ -65,7 +66,13 @@ exports.register = async (req, res) => {
         })
       );
     }
-    let result = await addUser({ email, name, phone, password });
+    let result = await addUser({
+      email,
+      id: uniqid("user-"),
+      name,
+      phone,
+      password,
+    });
     if (result.result) {
       res
         .status(201)
@@ -251,6 +258,7 @@ exports.google_handel_token = async (req, res) => {
       );
       let password = generateStrongPassword();
       let result = await addUser({
+        id: uniqid("user-"),
         email: googleUser.email,
         name: googleUser.name,
         password: password,
@@ -382,9 +390,9 @@ function validateTest(test) {
           return "Option text cannot be empty.";
         }
 
-        if (option.iscorrect !== undefined && option.iscorrect !== true) {
-          return "At least one option must be marked as correct.";
-        }
+        // if (option.iscorrect !== undefined && option.iscorrect !== true) {
+        //   return "At least one option must be marked as correct.";
+        // }
       }
     }
   }
@@ -415,7 +423,11 @@ exports.upload_test = async (req, res) => {
       console.log(validations);
       return res.status(400).json({ result: false, message: validations });
     }
-    let result = await addTest(data);
+    let result = await addTest({
+      ...data,
+      id: uniqid("test-"),
+      creator_id: user.id,
+    });
     if (result.result) {
       res
         .status(201)

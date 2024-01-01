@@ -27,37 +27,15 @@ const Signup = () => {
     e.preventDefault();
     const { email, name, phone, cPassword, password } = data;
     if (!email || !validator.isEmail(email)) {
-      throw new Error(
-        JSON.stringify({ status: 400, message: "Please provide a valid email" })
-      );
+      return alert("Please provide a valid email")
     } else if (!phone || !validator.isMobilePhone(phone, "en-IN")) {
-      throw new Error(
-        JSON.stringify({
-          status: 400,
-          message: "Please provide a valid Mobile number",
-        })
-      );
+      return alert("Please provide a valid Mobile number")
     } else if (!password || !cPassword) {
-      throw new Error(
-        JSON.stringify({
-          status: 400,
-          message: "Please input every field",
-        })
-      );
+      return alert("Please input every field");
     } else if (password !== cPassword) {
-      throw new Error(
-        JSON.stringify({
-          status: 400,
-          message: "Both password must be identical",
-        })
-      );
+      return alert("Both password must be identical");
     } else if (!validator.isStrongPassword(password)) {
-      throw new Error(
-        JSON.stringify({
-          status: 400,
-          message: "Please enter a strong password",
-        })
-      );
+      return alert("Please enter a strong password");
     }
     const response = await fetch("/api/Register", {
       method: "POST",

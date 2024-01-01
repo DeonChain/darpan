@@ -19,7 +19,6 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 
 // === === === configuring router === === === //
 root.render(
-  <React.StrictMode>
     <BrowserRouter>
       <Provider store={store}>
         <>
@@ -36,5 +35,4 @@ root.render(
         </>
       </Provider>
     </BrowserRouter>
-  </React.StrictMode>
 );

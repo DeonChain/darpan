@@ -300,9 +300,9 @@ const Createtest = () => {
             return "Option text cannot be empty.";
           }
 
-          if (option.iscorrect !== undefined && option.iscorrect !== true) {
-            return "At least one option must be marked as correct.";
-          }
+          // if (option.iscorrect !== undefined && option.iscorrect !== true) {
+          //   return "At least one option must be marked as correct.";
+          // }
         }
       }
     }
