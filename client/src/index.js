@@ -12,6 +12,7 @@ import Signup from "./components/pages/Signup";
 import Createtest from "./components/pages/Createtest";
 import Profilepage from "./components/pages/Profilepage";
 import Nav from "./components/templates/Nav";
+import Testlister from "./components/pages/Testlister";
 // === === === Ends here === === === //
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -29,6 +30,7 @@ root.render(
             <Route exact path="/Signup" element={<Signup />} />
             <Route exact path="/newtest" element={<Createtest />} />
             <Route exact path="/profile" element={<Profilepage />} />
+            <Route exact path="/available-tests" element={<Testlister />} />
             <Route path="*"element={<ErrorPage/>} />
           </Routes>
         </>
