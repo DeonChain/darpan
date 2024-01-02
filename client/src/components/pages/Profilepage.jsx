@@ -40,14 +40,14 @@ const Profilepage = () => {
   return (
     <>
       <h1 className="user-head">User Profile</h1>
-      <div class="profile-container">
-        <div class="profile-image">
+      <div className="profile-container">
+        <div className="profile-image">
           <img
             src="https://cdn3.iconfinder.com/data/icons/web-design-and-development-2-6/512/87-1024.png"
             alt="User Profile Image"
           />
         </div>
-        <div class="profile-details">
+        <div className="profile-details">
           <h2>Joel Taylor</h2>
           <p>
             <b>Age:</b> 23

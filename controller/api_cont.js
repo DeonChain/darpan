@@ -6,7 +6,7 @@ const {
   getUserByPhone,
   updateuser,
 } = require("../collection/Users");
-const { addTest } = require("../collection/Test");
+const { addTest, getAllTests } = require("../collection/Test");
 const validator = require("validator");
 const jwt = require("jsonwebtoken");
 const { getauthurl, getToken } = require("../middleware/authurl");
@@ -446,5 +446,32 @@ exports.upload_test = async (req, res) => {
       .clearCookie("idnty")
       .status(400 || err.status)
       .json({ result: false, message: err.message });
+  }
+};
+
+exports.get_test = async (req, res) => {
+  try {
+    const { userId, testId } = req.body;
+
+    const tests = await getAllTests(userId, testId);
+
+    if (tests.length === 0) {
+      return res.status(404).json({ error: "No tests found" });
+    }
+
+    const filteredTests = tests.map(
+      ({ id, creator_id, title, datetime, duration }) => ({
+        id,
+        creator_id,
+        title,
+        datetime,
+        duration,
+      })
+    );
+
+    return res.status(200).json({ tests: filteredTests });
+  } catch (error) {
+    console.error("Error fetching test data:", error);
+    return res.status(500).json({ error: "Internal Server Error" });
   }
 };

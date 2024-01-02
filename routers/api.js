@@ -8,6 +8,7 @@ const {
   google_handel_token,
   logout,
   upload_test,
+  get_test,
 } = require("../controller/api_cont");
 const auth = require("../middleware/auth");
 const querystring = require("querystring");
@@ -39,5 +40,9 @@ router.get("/logout", auth, logout);
 // === === === create test === === === //
 
 router.post("/new/test", auth, upload_test);
+
+// === === === get test === === === //
+
+router.post("/avilable-test", auth, get_test);
 
 module.exports = router;
