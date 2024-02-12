@@ -11,6 +11,7 @@ const Login = () => {
   const data = useSelector((state) => state.signup);
   const Navigate = useNavigate();
   const user = useSelector((state) => state.user);
+
   useEffect(() => {
     if (user.email) {
       Navigate("/");

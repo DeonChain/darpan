@@ -67,6 +67,10 @@ function Nav({ type }) {
           <NavLink to="/" className="logo">
             <h2>Darpan Analytics</h2>
           </NavLink>
+          {/* <NavLink to="/" className="">
+            <h2>Psycometric Test</h2>
+          </NavLink> */}
+         
           <nav className="navbar" data-navbar>
             {type === "login" || type === "signup" ? (
               ""

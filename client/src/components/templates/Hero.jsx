@@ -3,7 +3,9 @@ import image1 from "./images/hero-banner-1.jpg";
 import image2 from "./images/hero-banner-2.jpg";
 import image3 from "./images/hero-shape-1.svg";
 import image4 from "./images/hero-shape-2.png";
+import { Link, useNavigate } from "react-router-dom";
 function Hero() {
+  const Navigate = useNavigate();
   return (
     <section
       className="section hero has-bg-image"
@@ -14,17 +16,15 @@ function Hero() {
       <div className="container">
         <div className="hero-content">
           <h1 className="h1 section-title">
-            The Best Program to <span className="span">Enroll</span> for
-            Exchange
+            Empowering <span className="span">AI based</span> educational modules
           </h1>
 
           <p className="hero-text">
-            Excepteur sint occaecat cupidatat non proident sunt in culpa qui
-            officia deserunt mollit.
+            We develop on demand cutting edge Technology products for Schools and Universities
           </p>
 
-          <a href="#" className="btn has-before">
-            <span className="span">Find courses</span>
+          <a href="" className="btn has-before">
+            <span className="span" onClick={()=>Navigate('/psycometric')}>Take Psycometric Test</span>
             <ion-icon
               name="arrow-forward-outline"
               aria-hidden="true"

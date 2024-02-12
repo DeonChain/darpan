@@ -11,6 +11,7 @@ import Login from "./components/pages/Login";
 import Signup from "./components/pages/Signup";
 import Createtest from "./components/pages/Createtest";
 import Profilepage from "./components/pages/Profilepage";
+import Psycometric from "./components/pages/Psycometric";
 import Nav from "./components/templates/Nav";
 import Testlister from "./components/pages/Testlister";
 // === === === Ends here === === === //
@@ -29,6 +30,7 @@ root.render(
             <Route exact path="/Signup" element={<Signup />} />
             <Route exact path="/newtest" element={<Createtest />} />
             <Route exact path="/profile" element={<Profilepage />} />
+            <Route exact path="/psycometric" element={<Psycometric />} />
             <Route exact path="/available-tests" element={<Testlister />} />
             <Route path="*"element={<ErrorPage/>} />
           </Routes>
